@@ -69,10 +69,16 @@ No environment variables, database, or backend configuration required — the ap
 ---
 
 ## 🤝 Connect with Me
-📦 GitHub: [github.com/Kunalsahuji](https://github.com/Kunalsahuji)  
-🔗 LinkedIn: [linkedin.com/in/kunal-sahu-7688ba1b0](https://www.linkedin.com/in/kunal-sahu-7688ba1b0)  
-📌 Notion: [Watch my content](https://www.notion.so/1dff7c6ce1bb803787fbddd34e422ab4?v=1e0f7c6ce1bb8052b14c000cb57448ee&pvs=4)  
-📧 Email: [ksahu0103@gmail.com](mailto:ksahu0103@gmail.com)  
+I'm **Kunal Sahu** — a full-stack developer (MERN) who loves turning rough datasets and briefs into clean, fast, production-ready products. If you'd like to discuss this project, ask for a walkthrough, or collaborate on something, reach out any time:
+
+📦 **GitHub**: [github.com/Kunalsahuji](https://github.com/Kunalsahuji)  
+🔗 **LinkedIn**: [kunal-sahu-7688ba1b0](https://www.linkedin.com/in/kunal-sahu-7688ba1b0)  
+📌 **Notion**: [Watch my content](https://www.notion.so/1dff7c6ce1bb803787fbddd34e422ab4?v=1e0f7c6ce1bb8052b14c000cb57448ee&pvs=4)  
+📧 **Email**: [ksahu0103@gmail.com](mailto:ksahu0103@gmail.com)  
+🗂️ **This project**: [csv-buddy-show](https://github.com/Kunalsahuji/csv-buddy-show) · [Live demo](https://csv-buddy-show.lovable.app/)
+
+> Feedback, feature requests, and code reviews are all welcome — open an issue on the repo or drop me a mail.
+
 
 ---
 
