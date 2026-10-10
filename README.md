@@ -1,4 +1,4 @@
-# 📊 CSV Insight — Upload, Explore & Filter CSV Data
+# 📊 CSV Insight - Upload, Explore & Filter CSV Data
 
 **CSV Insight** is a high-fidelity, secure, and blazing-fast web application that lets anyone upload a CSV file and explore it instantly in the browser. Drop any dataset to view it as a clean interactive table — search across every column, filter by any field, sort numerically or alphabetically, paginate through large files, and export the filtered results as a fresh CSV. 100% client-side: your data never leaves your device.
 
