@@ -35,8 +35,9 @@
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd csv-insight
+git clone https://github.com/Kunalsahuji/csv-buddy-show.git
+cd csv-buddy-show
+
 
 # Install dependencies
 npm install
@@ -53,16 +54,32 @@ No environment variables, database, or backend configuration required — the ap
 ---
 
 ## 🔗 Live Implementation
-🚀 **Deployment**: *(Add your deployment link here)*
-📂 **Github Repository**: *(Add your github repo link here)*
+🚀 **Live Demo**: [https://csv-buddy-show.lovable.app/](https://csv-buddy-show.lovable.app/)  
+📂 **GitHub Repository**: [https://github.com/Kunalsahuji/csv-buddy-show](https://github.com/Kunalsahuji/csv-buddy-show)  
+🧪 **Try it instantly**: Open the live demo and click **"Try sample data"** — a real 1,000-row shampoo shelf-audit dataset loads immediately, so you can test search, filters, sorting and export without preparing a file.
+
+| Detail | Value |
+| --- | --- |
+| Deployed URL | https://csv-buddy-show.lovable.app/ |
+| Git Repository | https://github.com/Kunalsahuji/csv-buddy-show |
+| Hosting | Lovable Cloud (frontend build, auto-deployed) |
+| Backend | None — 100% client-side |
+| Sample Dataset | 1,000 rows · shampoo shelf-audit (Brand, Store, City, Price, Rating, Stock, Date) |
+
 
 ---
 
 ## 🤝 Connect with Me
-📦 GitHub: [github.com/Kunalsahuji](https://github.com/Kunalsahuji)  
-🔗 LinkedIn: [linkedin.com/in/kunal-sahu-7688ba1b0](https://www.linkedin.com/in/kunal-sahu-7688ba1b0)  
-📌 Notion: [Watch my content](https://www.notion.so/1dff7c6ce1bb803787fbddd34e422ab4?v=1e0f7c6ce1bb8052b14c000cb57448ee&pvs=4)  
-📧 Email: [ksahu0103@gmail.com](mailto:ksahu0103@gmail.com)  
+I'm **Kunal Sahu** — a full-stack developer (MERN) who loves turning rough datasets and briefs into clean, fast, production-ready products. If you'd like to discuss this project, ask for a walkthrough, or collaborate on something, reach out any time:
+
+📦 **GitHub**: [github.com/Kunalsahuji](https://github.com/Kunalsahuji)  
+🔗 **LinkedIn**: [kunal-sahu-7688ba1b0](https://www.linkedin.com/in/kunal-sahu-7688ba1b0)  
+📌 **Notion**: [Watch my content](https://www.notion.so/1dff7c6ce1bb803787fbddd34e422ab4?v=1e0f7c6ce1bb8052b14c000cb57448ee&pvs=4)  
+📧 **Email**: [ksahu0103@gmail.com](mailto:ksahu0103@gmail.com)  
+🗂️ **This project**: [csv-buddy-show](https://github.com/Kunalsahuji/csv-buddy-show) · [Live demo](https://csv-buddy-show.lovable.app/)
+
+> Feedback, feature requests, and code reviews are all welcome — open an issue on the repo or drop me a mail.
+
 
 ---
 
