@@ -53,8 +53,18 @@ No environment variables, database, or backend configuration required — the ap
 ---
 
 ## 🔗 Live Implementation
-🚀 **Deployment**: *(Add your deployment link here)*
-📂 **Github Repository**: *(Add your github repo link here)*
+🚀 **Live Demo**: [https://csv-buddy-show.lovable.app/](https://csv-buddy-show.lovable.app/)  
+📂 **GitHub Repository**: [https://github.com/Kunalsahuji/csv-buddy-show](https://github.com/Kunalsahuji/csv-buddy-show)  
+🧪 **Try it instantly**: Open the live demo and click **"Try sample data"** — a real 1,000-row shampoo shelf-audit dataset loads immediately, so you can test search, filters, sorting and export without preparing a file.
+
+| Detail | Value |
+| --- | --- |
+| Deployed URL | https://csv-buddy-show.lovable.app/ |
+| Git Repository | https://github.com/Kunalsahuji/csv-buddy-show |
+| Hosting | Lovable Cloud (frontend build, auto-deployed) |
+| Backend | None — 100% client-side |
+| Sample Dataset | 1,000 rows · shampoo shelf-audit (Brand, Store, City, Price, Rating, Stock, Date) |
+
 
 ---
 
