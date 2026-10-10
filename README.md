@@ -35,8 +35,9 @@
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd csv-insight
+git clone https://github.com/Kunalsahuji/csv-buddy-show.git
+cd csv-buddy-show
+
 
 # Install dependencies
 npm install
