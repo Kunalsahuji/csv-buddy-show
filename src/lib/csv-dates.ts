@@ -65,3 +65,9 @@ export function detectDateColumns(data: CsvData): string[] {
     return dateNamed || validCount / values.length >= 0.6;
   });
 }
+
+export function isWithinDateRange(value: string | undefined, filter: DateRangeFilter): boolean {
+  const date = parseDateKey(value);
+  if (!date) return false;
+  return (!filter.start || date >= filter.start) && (!filter.end || date <= filter.end);
+}
