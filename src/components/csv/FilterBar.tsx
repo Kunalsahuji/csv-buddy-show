@@ -1,5 +1,7 @@
-import { Search, SlidersHorizontal, X } from "lucide-react";
+import { CalendarDays, Search, SlidersHorizontal, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import type { CsvData } from "@/lib/csv";
+import type { DateRangeFilter } from "@/lib/csv-dates";
 
 export interface ColumnFilter {
   column: string;
@@ -13,6 +15,13 @@ interface FilterBarProps {
   filters: ColumnFilter[];
   onFiltersChange: (filters: ColumnFilter[]) => void;
   distinctValues: Map<string, string[]>;
+  dateColumns: string[];
+  dateRange: DateRangeFilter;
+  dateFilterApplied: boolean;
+  onDateRangeChange: (filter: DateRangeFilter) => void;
+  onApplyDateRange: () => void;
+  onClearDateRange: () => void;
+  onClearAll: () => void;
 }
 
 export function FilterBar({
@@ -22,6 +31,13 @@ export function FilterBar({
   filters,
   onFiltersChange,
   distinctValues,
+  dateColumns,
+  dateRange,
+  dateFilterApplied,
+  onDateRangeChange,
+  onApplyDateRange,
+  onClearDateRange,
+  onClearAll,
 }: FilterBarProps) {
   const setFilter = (column: string, value: string) => {
     const next = filters.filter((f) => f.column !== column);
@@ -29,7 +45,9 @@ export function FilterBar({
     onFiltersChange(next);
   };
 
-  const activeCount = filters.length + (search ? 1 : 0);
+  const dateFilterActive = dateFilterApplied || Boolean(dateRange.start || dateRange.end);
+  const activeCount = filters.length + Number(Boolean(search)) + Number(dateFilterActive);
+  const invalidDateRange = Boolean(dateRange.start && dateRange.end && dateRange.start > dateRange.end);
 
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
@@ -49,17 +67,10 @@ export function FilterBar({
           Column filters
         </span>
         {activeCount > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              onSearchChange("");
-              onFiltersChange([]);
-            }}
-            className="flex items-center gap-1 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-          >
+          <Button type="button" variant="outline" size="sm" onClick={onClearAll} className="h-8 gap-1 text-xs text-muted-foreground">
             <X className="h-3.5 w-3.5" />
             Clear all ({activeCount})
-          </button>
+          </Button>
         )}
       </div>
 
@@ -104,6 +115,74 @@ export function FilterBar({
             </div>
           );
         })}
+      </div>
+
+      <div className="mt-4 border-t border-border pt-4">
+        <div className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
+          <CalendarDays className="h-4 w-4 text-primary" />
+          Date range
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(180px,1.2fr)_repeat(2,minmax(150px,1fr))_auto_auto] lg:items-end">
+          <label className="flex min-w-0 flex-col gap-1.5 text-xs font-medium text-muted-foreground">
+            Date column
+            <select
+              value={dateRange.column}
+              onChange={(event) => onDateRangeChange({ ...dateRange, column: event.target.value })}
+              disabled={dateColumns.length === 0}
+              className="h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50"
+              aria-label="Date column"
+            >
+              {dateColumns.length === 0 ? (
+                <option value="">No date columns detected</option>
+              ) : (
+                dateColumns.map((column) => <option key={column} value={column}>{column}</option>)
+              )}
+            </select>
+          </label>
+          <label className="flex min-w-0 flex-col gap-1.5 text-xs font-medium text-muted-foreground">
+            Start Date
+            <input
+              type="date"
+              value={dateRange.start}
+              onChange={(event) => onDateRangeChange({ ...dateRange, start: event.target.value })}
+              disabled={dateColumns.length === 0}
+              className="h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+          </label>
+          <label className="flex min-w-0 flex-col gap-1.5 text-xs font-medium text-muted-foreground">
+            End Date
+            <input
+              type="date"
+              value={dateRange.end}
+              onChange={(event) => onDateRangeChange({ ...dateRange, end: event.target.value })}
+              disabled={dateColumns.length === 0}
+              className="h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+          </label>
+          <Button
+            type="button"
+            onClick={onApplyDateRange}
+            disabled={dateColumns.length === 0 || invalidDateRange || (!dateRange.start && !dateRange.end)}
+            className="h-10 w-full sm:col-span-2 lg:col-span-1"
+            aria-label="Apply Date Filter"
+          >
+            Apply Date Filter
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onClearDateRange}
+            disabled={!dateFilterActive || dateColumns.length === 0}
+            className="h-10 w-full sm:col-span-2 lg:col-span-1"
+          >
+            Clear Date Filter
+          </Button>
+        </div>
+        {dateColumns.length === 0 ? (
+          <p className="mt-2 text-xs text-muted-foreground">No date columns were found in this CSV.</p>
+        ) : invalidDateRange ? (
+          <p className="mt-2 text-xs text-destructive" role="alert">Start date must be on or before the end date.</p>
+        ) : null}
       </div>
     </div>
   );

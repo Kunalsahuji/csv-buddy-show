@@ -5,6 +5,7 @@ import { parseCsvFile, formatBytes, type CsvData } from "@/lib/csv";
 import { UploadZone } from "@/components/csv/UploadZone";
 import { FilterBar, type ColumnFilter } from "@/components/csv/FilterBar";
 import { DataTable } from "@/components/csv/DataTable";
+import { detectDateColumns, type DateRangeFilter } from "@/lib/csv-dates";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,6 +35,8 @@ function Index() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<ColumnFilter[]>([]);
+  const [dateRange, setDateRange] = useState<DateRangeFilter>({ column: "", start: "", end: "" });
+  const [appliedDateRange, setAppliedDateRange] = useState<DateRangeFilter | null>(null);
 
   const handleFile = useCallback(async (file: File) => {
     setLoading(true);
@@ -43,6 +46,9 @@ function Index() {
       setCsvData(parsed);
       setSearch("");
       setFilters([]);
+      const firstDateColumn = detectDateColumns(parsed)[0] ?? "";
+      setDateRange({ column: firstDateColumn, start: "", end: "" });
+      setAppliedDateRange(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not read this file.");
     } finally {
@@ -62,6 +68,9 @@ function Index() {
       setCsvData(parsed);
       setSearch("");
       setFilters([]);
+      const firstDateColumn = detectDateColumns(parsed)[0] ?? "";
+      setDateRange({ column: firstDateColumn, start: "", end: "" });
+      setAppliedDateRange(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not load the sample file.");
     } finally {
@@ -73,6 +82,8 @@ function Index() {
     setCsvData(null);
     setSearch("");
     setFilters([]);
+    setDateRange({ column: "", start: "", end: "" });
+    setAppliedDateRange(null);
     setError(null);
   };
 
@@ -92,6 +103,18 @@ function Index() {
     }
     return map;
   }, [csvData]);
+
+  const dateColumns = useMemo(() => (csvData ? detectDateColumns(csvData) : []), [csvData]);
+
+  const updateDateRange = (next: DateRangeFilter) => {
+    setDateRange(next);
+  };
+
+  const applyDateRange = () => {
+    if (!dateRange.column || (!dateRange.start && !dateRange.end)) return;
+    if (dateRange.start && dateRange.end && dateRange.start > dateRange.end) return;
+    setAppliedDateRange({ ...dateRange });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -190,9 +213,25 @@ function Index() {
               filters={filters}
               onFiltersChange={setFilters}
               distinctValues={distinctValues}
+              dateColumns={dateColumns}
+              dateRange={dateRange}
+              dateFilterApplied={Boolean(appliedDateRange)}
+              onDateRangeChange={updateDateRange}
+              onApplyDateRange={applyDateRange}
+              onClearDateRange={() => {
+                const cleared = { column: dateColumns[0] ?? "", start: "", end: "" };
+                setDateRange(cleared);
+                setAppliedDateRange(null);
+              }}
+              onClearAll={() => {
+                setSearch("");
+                setFilters([]);
+                setDateRange({ column: dateColumns[0] ?? "", start: "", end: "" });
+                setAppliedDateRange(null);
+              }}
             />
 
-            <DataTable data={csvData} search={search} filters={filters} />
+            <DataTable data={csvData} search={search} filters={filters} dateRange={appliedDateRange} />
           </div>
         )}
       </main>
