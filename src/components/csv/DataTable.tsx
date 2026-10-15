@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, Download } from "lucide-react";
 import { toCsvString, type CsvData } from "@/lib/csv";
+import { isWithinDateRange, type DateRangeFilter } from "@/lib/csv-dates";
 import type { ColumnFilter } from "./FilterBar";
 
 const PAGE_SIZE = 15;
@@ -11,6 +12,7 @@ interface DataTableProps {
   data: CsvData;
   search: string;
   filters: ColumnFilter[];
+  dateRange: DateRangeFilter | null;
 }
 
 function isNumericColumn(rows: Record<string, string>[], column: string): boolean {
@@ -24,7 +26,7 @@ function isNumericColumn(rows: Record<string, string>[], column: string): boolea
   return checked > 0;
 }
 
-export function DataTable({ data, search, filters }: DataTableProps) {
+export function DataTable({ data, search, filters, dateRange }: DataTableProps) {
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [page, setPage] = useState(0);
@@ -44,13 +46,16 @@ export function DataTable({ data, search, filters }: DataTableProps) {
         const cell = (row[filter.column] ?? "").toLowerCase();
         if (!cell.includes(filter.value.toLowerCase())) return false;
       }
+      if (dateRange && (dateRange.start || dateRange.end)) {
+        if (!dateRange.column || !isWithinDateRange(row[dateRange.column], dateRange)) return false;
+      }
       if (query) {
         const match = data.columns.some((c) => (row[c] ?? "").toLowerCase().includes(query));
         if (!match) return false;
       }
       return true;
     });
-  }, [data, search, filters]);
+  }, [data, search, filters, dateRange]);
 
   const sortedRows = useMemo(() => {
     if (!sortColumn || !sortDirection) return filteredRows;
