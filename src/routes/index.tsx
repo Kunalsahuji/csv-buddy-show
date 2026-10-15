@@ -46,7 +46,8 @@ function Index() {
       setCsvData(parsed);
       setSearch("");
       setFilters([]);
-      setDateRange({ column: "", start: "", end: "" });
+      const firstDateColumn = detectDateColumns(parsed)[0] ?? "";
+      setDateRange({ column: firstDateColumn, start: "", end: "" });
       setAppliedDateRange(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not read this file.");
@@ -67,7 +68,8 @@ function Index() {
       setCsvData(parsed);
       setSearch("");
       setFilters([]);
-      setDateRange({ column: "", start: "", end: "" });
+      const firstDateColumn = detectDateColumns(parsed)[0] ?? "";
+      setDateRange({ column: firstDateColumn, start: "", end: "" });
       setAppliedDateRange(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not load the sample file.");
@@ -106,11 +108,6 @@ function Index() {
 
   const updateDateRange = (next: DateRangeFilter) => {
     setDateRange(next);
-    setAppliedDateRange((current) =>
-      current && current.column === next.column && current.start === next.start && current.end === next.end
-        ? current
-        : current
-    );
   };
 
   const applyDateRange = () => {
