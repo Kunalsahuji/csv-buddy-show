@@ -18,6 +18,8 @@ interface FilterBarProps {
   dateColumns: string[];
   dateRange: DateRangeFilter;
   onDateRangeChange: (filter: DateRangeFilter) => void;
+  onApplyDateRange: () => void;
+  onClearDateRange: () => void;
   onClearAll: () => void;
 }
 
@@ -31,6 +33,8 @@ export function FilterBar({
   dateColumns,
   dateRange,
   onDateRangeChange,
+  onApplyDateRange,
+  onClearDateRange,
   onClearAll,
 }: FilterBarProps) {
   const setFilter = (column: string, value: string) => {
@@ -155,7 +159,7 @@ export function FilterBar({
           </label>
           <Button
             type="button"
-            onClick={onDateRangeChange.bind(null, dateRange)}
+            onClick={onApplyDateRange}
             disabled={dateColumns.length === 0 || invalidDateRange || (!dateRange.start && !dateRange.end)}
             className="h-10 w-full sm:col-span-2 lg:col-span-1"
             aria-label="Apply Date Filter"
@@ -165,8 +169,8 @@ export function FilterBar({
           <Button
             type="button"
             variant="outline"
-            onClick={() => onDateRangeChange({ column: dateColumns[0] ?? "", start: "", end: "" })}
-            disabled={!dateFilterActive && !dateRange.column}
+            onClick={onClearDateRange}
+            disabled={!dateFilterActive}
             className="h-10 w-full sm:col-span-2 lg:col-span-1"
           >
             Clear Date Filter
