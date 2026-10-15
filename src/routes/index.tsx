@@ -215,6 +215,7 @@ function Index() {
               distinctValues={distinctValues}
               dateColumns={dateColumns}
               dateRange={dateRange}
+              dateFilterApplied={Boolean(appliedDateRange)}
               onDateRangeChange={updateDateRange}
               onApplyDateRange={applyDateRange}
               onClearDateRange={() => {

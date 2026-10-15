@@ -17,6 +17,7 @@ interface FilterBarProps {
   distinctValues: Map<string, string[]>;
   dateColumns: string[];
   dateRange: DateRangeFilter;
+  dateFilterApplied: boolean;
   onDateRangeChange: (filter: DateRangeFilter) => void;
   onApplyDateRange: () => void;
   onClearDateRange: () => void;
@@ -32,6 +33,7 @@ export function FilterBar({
   distinctValues,
   dateColumns,
   dateRange,
+  dateFilterApplied,
   onDateRangeChange,
   onApplyDateRange,
   onClearDateRange,
@@ -43,7 +45,7 @@ export function FilterBar({
     onFiltersChange(next);
   };
 
-  const dateFilterActive = Boolean(dateRange.start || dateRange.end);
+  const dateFilterActive = dateFilterApplied || Boolean(dateRange.start || dateRange.end);
   const activeCount = filters.length + Number(Boolean(search)) + Number(dateFilterActive);
   const invalidDateRange = Boolean(dateRange.start && dateRange.end && dateRange.start > dateRange.end);
 
@@ -170,7 +172,7 @@ export function FilterBar({
             type="button"
             variant="outline"
             onClick={onClearDateRange}
-            disabled={!dateFilterActive}
+            disabled={!dateFilterActive || dateColumns.length === 0}
             className="h-10 w-full sm:col-span-2 lg:col-span-1"
           >
             Clear Date Filter
