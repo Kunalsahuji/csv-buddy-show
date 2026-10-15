@@ -52,16 +52,15 @@ export function parseDateKey(value: string | undefined): string | null {
 /** Detects likely date fields from their headings and the values they contain. */
 export function detectDateColumns(data: CsvData): string[] {
   return data.columns.filter((column) => {
+    const normalizedHeading = column.replace(/[^a-z0-9]+/gi, " ");
+    const dateNamed = DATE_HEADER_PATTERN.test(normalizedHeading);
     const values = data.rows
       .map((row) => row[column]?.trim() ?? "")
       .filter((value) => value.length > 0);
-    if (values.length === 0) return false;
+    if (values.length === 0) return dateNamed;
 
     const validCount = values.reduce((count, value) => count + Number(parseDateKey(value) !== null), 0);
-    if (validCount === 0) return false;
-
-    const normalizedHeading = column.replace(/[^a-z0-9]+/gi, " ");
-    const dateNamed = DATE_HEADER_PATTERN.test(normalizedHeading);
+    if (validCount === 0) return dateNamed;
     return dateNamed || validCount / values.length >= 0.6;
   });
 }
